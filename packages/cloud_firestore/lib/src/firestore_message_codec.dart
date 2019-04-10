@@ -17,6 +17,8 @@ class FirestoreMessageCodec extends StandardMessageCodec {
   static const int _kDelete = 134;
   static const int _kServerTimestamp = 135;
   static const int _kTimestamp = 136;
+  static const int _kIncrementInteger = 137;
+  static const int _kIncrementDouble = 138;
 
   static const Map<FieldValueType, int> _kFieldValueCodes =
       <FieldValueType, int>{
