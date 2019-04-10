@@ -883,5 +883,9 @@ bool _deepEqualsMap(
 bool _deepEqualsFieldValue(FieldValue valueA, FieldValue valueB) {
   if (valueA.type != valueB.type) return false;
   if (valueA.value == null) return valueB.value == null;
+  if (valueA.type == FieldValueType.incrementInteger ||
+      valueA.type == FieldValueType.incrementDouble) {
+    return valueA.value == valueB.value;
+  }
   return _deepEqualsList(valueA.value, valueB.value);
 }
