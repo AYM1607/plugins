@@ -4,7 +4,14 @@
 
 part of cloud_firestore;
 
-enum FieldValueType { arrayUnion, arrayRemove, delete, serverTimestamp }
+enum FieldValueType {
+  arrayUnion,
+  arrayRemove,
+  delete,
+  serverTimestamp,
+  incrementInteger,
+  incrementDouble,
+}
 
 /// Sentinel values that can be used when writing document fields with set() or
 /// update().
@@ -40,4 +47,16 @@ class FieldValue {
   /// server-generated timestamp in the written data.
   static FieldValue serverTimestamp() =>
       FieldValue._(FieldValueType.serverTimestamp, null);
+
+  /// Returns a special value that can be used with setData() or updateData()
+  /// that tells the server to increment the field’s current value by the given
+  /// integer value.
+  static FieldValue incrementInteger(int value) =>
+      FieldValue._(FieldValueType.incrementInteger, value);
+
+  /// Returns a special value that can be used with setData() or updateData()
+  /// that tells the server to increment the field’s current value by the given
+  /// floating point value.
+  static FieldValue incrementDouble(double value) =>
+      FieldValue._(FieldValueType.incrementDouble, value);
 }
