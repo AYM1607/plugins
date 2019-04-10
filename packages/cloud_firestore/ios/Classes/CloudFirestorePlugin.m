@@ -236,6 +236,12 @@ const UInt8 INCREMENT_DOUBLE = 138;
     case SERVER_TIMESTAMP: {
       return [FIRFieldValue fieldValueForServerTimestamp];
     }
+    case INCREMENT_INTEGER: {
+      return [FIRFieldValue fieldValueForIntegerIncrement:[self readValue]];
+    }
+    case INCREMENT_DOUBLE: {
+      return [FIRFieldValue fieldValueForDoubleIncrement:[self readValue]];
+    }
     default:
       return [super readValueOfType:type];
   }
