@@ -59,7 +59,18 @@ class FirestoreMessageCodec extends StandardMessageCodec {
       final int code = _kFieldValueCodes[value.type];
       assert(code != null);
       buffer.putUint8(code);
-      if (value.value != null) writeValue(buffer, value.value);
+      if (value.value != null) {
+        switch (code) {
+          case (137):
+            buffer.putInt64(value.value);
+            break;
+          case (138):
+            buffer.putFloat64(value.value);
+            break;
+          default:
+            writeValue(buffer, value.value);
+        }
+      }
     } else {
       super.writeValue(buffer, value);
     }
@@ -99,10 +110,10 @@ class FirestoreMessageCodec extends StandardMessageCodec {
       case _kServerTimestamp:
         return FieldValue.serverTimestamp();
       case _kIncrementInteger:
-        final int value = readValue(buffer);
+        final int value = buffer.getInt64();
         return FieldValue.incrementInteger(value);
       case _kIncrementDouble:
-        final double value = readValue(buffer);
+        final double value = buffer.getFloat64();
         return FieldValue.incrementDouble(value);
       default:
         return super.readValueOfType(type, buffer);
