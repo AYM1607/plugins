@@ -26,6 +26,8 @@ class FirestoreMessageCodec extends StandardMessageCodec {
     FieldValueType.arrayRemove: _kArrayRemove,
     FieldValueType.delete: _kDelete,
     FieldValueType.serverTimestamp: _kServerTimestamp,
+    FieldValueType.incrementInteger: _kIncrementInteger,
+    FieldValueType.incrementDouble: _kIncrementDouble,
   };
 
   @override
@@ -96,6 +98,12 @@ class FirestoreMessageCodec extends StandardMessageCodec {
         return FieldValue.delete();
       case _kServerTimestamp:
         return FieldValue.serverTimestamp();
+      case _kIncrementInteger:
+        final int value = readValue(buffer);
+        return FieldValue.incrementInteger(value);
+      case _kIncrementDouble:
+        final double value = readValue(buffer);
+        return FieldValue.incrementDouble(value);
       default:
         return super.readValueOfType(type, buffer);
     }
